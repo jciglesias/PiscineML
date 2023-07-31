@@ -1,8 +1,11 @@
 class Matrix:
-    shape = tuple()
-
-    def T():
-        pass
+    def T(self):
+        m = []
+        for i in range(self.shape[1]):
+            m.append([])
+            for j in range(self.shape[0]):
+                m[i].append(self.data[j][i])
+        return Matrix(m)
 
     def __init__(self, arg):
         if isinstance(arg, list):
@@ -49,6 +52,8 @@ class Matrix:
         pass
     def __repr__():
         pass
+    def __str__(self) -> str:
+        return f"{self.data}"
 
 class Vector(Matrix):
     def __init__(self, arg):
