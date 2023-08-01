@@ -15,5 +15,7 @@ if __name__=="__main__":
         print(m1 + m1)
         print(v1 + v2.T())
         print(v1 - v2.T())
+        print(v1 / 2)
+        print(2 / v1)
     except TypeError as e:
         print(e)

@@ -65,18 +65,30 @@ class Matrix:
             for x in range(m.shape[1]):
                 ret[y].append(m.data[y][x] - self.data[y][x])
         return type(self)(ret)
-    #div:onlyscalars.
-    def __truediv__():
-        pass
-    def __rtruediv__():
-        pass
+    #div:only scalars.
+    def __truediv__(self, scal):
+        if not (isinstance(self, (Matrix, Vector)) and isinstance(scal, (int, float))):
+            return NotImplemented
+        ret = []
+        for row in range(self.shape[0]):
+            ret.append([])
+            for column in range(self.shape[1]):
+                ret[row].append(self.data[row][column] / scal)
+        return type(self)(ret)
+    def __rtruediv__(self, scal):
+        if not (isinstance(self, (Matrix, Vector)) and isinstance(scal, (int, float))):
+            return NotImplemented
+        ret = []
+        for row in range(self.shape[0]):
+            ret.append([])
+            for column in range(self.shape[1]):
+                ret[row].append(scal / self.data[row][column])
+        return type(self)(ret)
     #mul:scalars,vectors and matrices,can have errors with vectors and matrices,
     #returns a Vector if we perform Matrix * Vector mutliplication.
     def __mul__():
         pass
     def __rmul__():
-        pass
-    def __str__():
         pass
     def __repr__():
         pass
