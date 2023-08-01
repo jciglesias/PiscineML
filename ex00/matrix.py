@@ -86,12 +86,50 @@ class Matrix:
         return type(self)(ret)
     #mul:scalars,vectors and matrices,can have errors with vectors and matrices,
     #returns a Vector if we perform Matrix * Vector mutliplication.
-    def __mul__():
-        pass
-    def __rmul__():
-        pass
-    def __repr__():
-        pass
+    def __mul__(self, m):
+        if type(self) != type(m) and isinstance(m, (int, float)):
+            ret = []
+            for row in range(self.shape[0]):
+                ret.append([])
+                for column in range(self.shape[1]):
+                    ret[row].append(self.data[row][column] * m)
+            return type(self)(ret)
+        elif self.shape[0] == m.shape[1] or self.shape[1] == m.shape[0]:
+            size = self.shape[0] if self.shape[0] == m.shape[1] and (self.shape[1] != m.shape[0] or self.shape[0] < self.shape[1]) else self.shape[1]
+            p = self.shape[0] if self.shape[0] != size else self.shape[1] if self.shape[1] > m.shape[0] else m.shape[0]
+            ret = [[0 for _ in range(size)] for _ in range(size)]
+            for row in range(size):
+                for column in range(size):
+                    for i in range(p):
+                        if self.shape[0] == size:
+                            ret[row][column] += self.data[row][i] * m.data[i][column]
+                        else:
+                            ret[row][column] += self.data[i][column] * m.data[row][i]
+            return type(self)(ret)
+        return NotImplemented
+    def __rmul__(self, m):
+        if type(self) != type(m) and isinstance(m, (int, float)):
+            ret = []
+            for row in range(self.shape[0]):
+                ret.append([])
+                for column in range(self.shape[1]):
+                    ret[row].append(self.data[row][column] * m)
+            return type(self)(ret)
+        elif self.shape[0] == m.shape[1] or self.shape[1] == m.shape[0]:
+            size = self.shape[0] if self.shape[0] == m.shape[1] and (self.shape[1] != m.shape[0] or self.shape[0] < self.shape[1]) else self.shape[1]
+            p = self.shape[0] if self.shape[0] != size else self.shape[1] if self.shape[1] > m.shape[0] else m.shape[0]
+            ret = [[0 for _ in range(size)] for _ in range(size)]
+            for row in range(size):
+                for column in range(size):
+                    for i in range(p):
+                        if self.shape[0] == size:
+                            ret[row][column] += self.data[row][i] * m.data[i][column]
+                        else:
+                            ret[row][column] += self.data[i][column] * m.data[row][i]
+            return type(self)(ret)
+        return NotImplemented
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}.data({self.data})"
     def __str__(self) -> str:
         return f"{self.data}"
 

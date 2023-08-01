@@ -3,6 +3,7 @@ from matrix import Matrix, Vector
 if __name__=="__main__":
     try:
         m1 = Matrix([[0.0,1.0],[2.0,3.0],[4.0,5.0]])
+        m2 = Matrix([[0.0,1.0,2.0],[3.0,4.0,5.0]])
         print(m1.shape)
         print(m1.T())
         print(m1.T().shape)
@@ -17,5 +18,9 @@ if __name__=="__main__":
         print(v1 - v2.T())
         print(v1 / 2)
         print(2 / v1)
+        print(repr(v1))
+        print(repr(m1))
+        print(m1 * 2)
+        print(m2*m1)
     except TypeError as e:
         print(e)
