@@ -5,7 +5,7 @@ class Matrix:
             m.append([])
             for j in range(self.shape[0]):
                 m[i].append(self.data[j][i])
-        return Matrix(m)
+        return type(self)(m)
 
     def __init__(self, arg):
         if isinstance(arg, list):
@@ -28,15 +28,43 @@ class Matrix:
         else:
             raise TypeError("Argument must be of type List of Lists or tuple.")
     #add:only matrices of same dimensions.
-    def __add__():
-        pass
-    def __radd__():
-        pass
+    def __add__(self, m):
+        if not (isinstance(self, (Matrix, Vector)) and isinstance(m, (Matrix, Vector))) or self.shape != m.shape or type(self) != type(m):
+            return NotImplemented
+        ret = []
+        for y in range(m.shape[0]):
+            ret.append([])
+            for x in range(m.shape[1]):
+                ret[y].append(self.data[y][x] + m.data[y][x])
+        return type(self)(ret)
+    def __radd__(self, m):
+        if not (isinstance(self, (Matrix, Vector)) and isinstance(m, (Matrix, Vector))) or self.shape != m.shape or type(self) != type(m):
+            return NotImplemented
+        ret = []
+        for y in range(m.shape[0]):
+            ret.append([])
+            for x in range(m.shape[1]):
+                ret[y].append(m.data[y][x] + self.data[y][x])
+        return type(self)(ret)
     #sub:only matrices of same dimensions.
-    def __sub__():
-        pass
-    def __rsub__():
-        pass
+    def __sub__(self, m):
+        if not (isinstance(self, (Matrix, Vector)) and isinstance(m, (Matrix, Vector))) or self.shape != m.shape or type(self) != type(m):
+            return NotImplemented
+        ret = []
+        for y in range(m.shape[0]):
+            ret.append([])
+            for x in range(m.shape[1]):
+                ret[y].append(self.data[y][x] - m.data[y][x])
+        return type(self)(ret)
+    def __rsub__(self, m):
+        if not (isinstance(self, (Matrix, Vector)) and isinstance(m, (Matrix, Vector))) or self.shape != m.shape or type(self) != type(m):
+            return NotImplemented
+        ret = []
+        for y in range(m.shape[0]):
+            ret.append([])
+            for x in range(m.shape[1]):
+                ret[y].append(m.data[y][x] - self.data[y][x])
+        return type(self)(ret)
     #div:onlyscalars.
     def __truediv__():
         pass
@@ -63,4 +91,10 @@ class Vector(Matrix):
     def dot(self, v):
         if not isinstance(v, Vector):
             raise TypeError("Argument must be of type Vector.")
-        pass
+        if self.shape[0] != 1 and (v.shape[0] != self.shape[0] and v.shape[0] != self.shape[1]) or (v.shape[0] != self.shape[1] and v.shape[1] != self.shape[1]):
+            raise TypeError("Vectors are not of the same dimension")
+        size = v.shape[0] if v.shape[0] > v.shape[1] else v.shape[1]
+        ret = 0
+        for i in range(size):
+            ret += (self.data[i][0] if self.shape[0] > self.shape[1] else self.data[0][i]) * (v.data[i][0] if v.shape[0] > v.shape[1] else v.data[0][i])
+        return ret
