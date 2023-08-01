@@ -1,5 +1,6 @@
 class Matrix:
     def T(self):
+        """Transpose the matrix"""
         m = []
         for i in range(self.shape[1]):
             m.append([])
@@ -8,6 +9,7 @@ class Matrix:
         return type(self)(m)
 
     def __init__(self, arg):
+        """Init with a tuple or a list of lists"""
         if isinstance(arg, list):
             if not arg or not len(arg) or not isinstance(arg[0], list):
                 raise TypeError("Argument must be a list of lists")
@@ -29,6 +31,7 @@ class Matrix:
             raise TypeError("Argument must be of type List of Lists or tuple.")
     #add:only matrices of same dimensions.
     def __add__(self, m):
+        """Sum of matrix and matrix"""
         if not (isinstance(self, (Matrix, Vector)) and isinstance(m, (Matrix, Vector))) or self.shape != m.shape or type(self) != type(m):
             return NotImplemented
         ret = []
@@ -38,6 +41,7 @@ class Matrix:
                 ret[y].append(self.data[y][x] + m.data[y][x])
         return type(self)(ret)
     def __radd__(self, m):
+        """Reverse sum of matrix and matrix"""
         if not (isinstance(self, (Matrix, Vector)) and isinstance(m, (Matrix, Vector))) or self.shape != m.shape or type(self) != type(m):
             return NotImplemented
         ret = []
@@ -48,6 +52,7 @@ class Matrix:
         return type(self)(ret)
     #sub:only matrices of same dimensions.
     def __sub__(self, m):
+        """Substraction of matrix and matrix"""
         if not (isinstance(self, (Matrix, Vector)) and isinstance(m, (Matrix, Vector))) or self.shape != m.shape or type(self) != type(m):
             return NotImplemented
         ret = []
@@ -57,6 +62,7 @@ class Matrix:
                 ret[y].append(self.data[y][x] - m.data[y][x])
         return type(self)(ret)
     def __rsub__(self, m):
+        """reverse substraction of matrix and matrix"""
         if not (isinstance(self, (Matrix, Vector)) and isinstance(m, (Matrix, Vector))) or self.shape != m.shape or type(self) != type(m):
             return NotImplemented
         ret = []
@@ -67,6 +73,7 @@ class Matrix:
         return type(self)(ret)
     #div:only scalars.
     def __truediv__(self, scal):
+        """Division of matrix and scalar"""
         if not (isinstance(self, (Matrix, Vector)) and isinstance(scal, (int, float))):
             return NotImplemented
         ret = []
@@ -76,6 +83,7 @@ class Matrix:
                 ret[row].append(self.data[row][column] / scal)
         return type(self)(ret)
     def __rtruediv__(self, scal):
+        """Reverse division of matrix and scalar"""
         if not (isinstance(self, (Matrix, Vector)) and isinstance(scal, (int, float))):
             return NotImplemented
         ret = []
@@ -87,6 +95,7 @@ class Matrix:
     #mul:scalars,vectors and matrices,can have errors with vectors and matrices,
     #returns a Vector if we perform Matrix * Vector mutliplication.
     def __mul__(self, m):
+        """Multiplication of matrix and matrix or scalar"""
         if type(self) != type(m) and isinstance(m, (int, float)):
             ret = []
             for row in range(self.shape[0]):
@@ -108,6 +117,7 @@ class Matrix:
             return type(self)(ret)
         return NotImplemented
     def __rmul__(self, m):
+        """Reverse multiplication of matrix and matrix or scalar"""
         if type(self) != type(m) and isinstance(m, (int, float)):
             ret = []
             for row in range(self.shape[0]):
@@ -129,6 +139,7 @@ class Matrix:
             return type(self)(ret)
         return NotImplemented
     def __repr__(self) -> str:
+        """Print dev version"""
         return f"{type(self).__name__}.data({self.data})"
     def __str__(self) -> str:
         return f"{self.data}"
@@ -139,6 +150,7 @@ class Vector(Matrix):
         if not (self.shape[0] != 1) ^ (self.shape[1] != 1):
             raise TypeError("Argument is not a Vector")
     def dot(self, v):
+        """Dot product of 2 vectors"""
         if not isinstance(v, Vector):
             raise TypeError("Argument must be of type Vector.")
         if self.shape[0] != 1 and (v.shape[0] != self.shape[0] and v.shape[0] != self.shape[1]) or (v.shape[0] != self.shape[1] and v.shape[1] != self.shape[1]):
