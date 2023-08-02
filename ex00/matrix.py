@@ -103,7 +103,19 @@ class Matrix:
                 for column in range(self.shape[1]):
                     ret[row].append(self.data[row][column] * m)
             return type(self)(ret)
-        elif self.shape[0] == m.shape[1] or self.shape[1] == m.shape[0]:
+        elif isinstance(self, Matrix) and isinstance(m, Vector) and self.shape[1] in m.shape:
+            vshape = 1 if m.shape[0] > 1 else 0
+            ret = [[0 for _ in range(m.shape[1])] for _ in range(m.shape[0])]
+            for row in range(m.shape[0]):
+                for column in range(m.shape[1]):
+                    if not vshape:
+                        for i in self.data:
+                            ret[row][column] += i[column] * m.data[row][column]
+                    else:
+                        for i in self.data:
+                            ret[row][column] += i[row] * m.data[row][column]
+            return Vector(ret)
+        elif type(self) == type(m) and (self.shape[0] == m.shape[1] or self.shape[1] == m.shape[0]):
             size = self.shape[0] if self.shape[0] == m.shape[1] and (self.shape[1] != m.shape[0] or self.shape[0] < self.shape[1]) else self.shape[1]
             p = self.shape[0] if self.shape[0] != size else self.shape[1] if self.shape[1] > m.shape[0] else m.shape[0]
             ret = [[0 for _ in range(size)] for _ in range(size)]
@@ -125,7 +137,19 @@ class Matrix:
                 for column in range(self.shape[1]):
                     ret[row].append(self.data[row][column] * m)
             return type(self)(ret)
-        elif self.shape[0] == m.shape[1] or self.shape[1] == m.shape[0]:
+        elif isinstance(self, Matrix) and isinstance(m, Vector) and self.shape[1] in m.shape:
+            vshape = 1 if m.shape[0] > 1 else 0
+            ret = [[0 for _ in range(m.shape[1])] for _ in range(m.shape[0])]
+            for row in range(m.shape[0]):
+                for column in range(m.shape[1]):
+                    if not vshape:
+                        for i in self.data:
+                            ret[row][column] += i[column] * m.data[row][column]
+                    else:
+                        for i in self.data:
+                            ret[row][column] += i[row] * m.data[row][column]
+            return Vector(ret)
+        elif type(self) == type(m) and (self.shape[0] == m.shape[1] or self.shape[1] == m.shape[0]):
             size = self.shape[0] if self.shape[0] == m.shape[1] and (self.shape[1] != m.shape[0] or self.shape[0] < self.shape[1]) else self.shape[1]
             p = self.shape[0] if self.shape[0] != size else self.shape[1] if self.shape[1] > m.shape[0] else m.shape[0]
             ret = [[0 for _ in range(size)] for _ in range(size)]
@@ -142,7 +166,7 @@ class Matrix:
         """Print dev version"""
         return f"{type(self).__name__}.data({self.data})"
     def __str__(self) -> str:
-        return f"{self.data}"
+        return f"{type(self).__name__}({self.data})"
 
 class Vector(Matrix):
     def __init__(self, arg):
