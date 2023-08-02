@@ -1,4 +1,5 @@
 import numpy as np
+from math import sqrt
 
 class TinyStatistician:
     def mean(x: list):
@@ -61,4 +62,6 @@ class TinyStatistician:
         """computes the sample standard deviation of a given non-empty list or array
         x. The method returns the sample standard deviation as a float, otherwise None if
         x is an empty list or array or a non expected type object."""
-        pass
+        if isinstance(x, (np.ndarray, list)) and len(x):
+            return sqrt(TinyStatistician.var(x))
+        return None
