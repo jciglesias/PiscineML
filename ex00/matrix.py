@@ -103,6 +103,8 @@ class Matrix:
                 for column in range(self.shape[1]):
                     ret[row].append(self.data[row][column] * m)
             return type(self)(ret)
+        elif isinstance(self, Vector) and isinstance(m, Vector):
+            return self.dot(m)
         elif isinstance(self, Matrix) and isinstance(m, Vector) and self.shape[1] in m.shape:
             vshape = 1 if m.shape[0] > 1 else 0
             ret = [[0 for _ in range(m.shape[1])] for _ in range(m.shape[0])]
@@ -137,6 +139,8 @@ class Matrix:
                 for column in range(self.shape[1]):
                     ret[row].append(self.data[row][column] * m)
             return type(self)(ret)
+        elif isinstance(self, Vector) and isinstance(m, Vector):
+            return self.dot(m)
         elif isinstance(self, Matrix) and isinstance(m, Vector) and self.shape[1] in m.shape:
             vshape = 1 if m.shape[0] > 1 else 0
             ret = [[0 for _ in range(m.shape[1])] for _ in range(m.shape[0])]
