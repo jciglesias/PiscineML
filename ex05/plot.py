@@ -12,10 +12,12 @@ def plot(x, y, theta):
     Raises:
     This function should not raise any Exceptions.
     """
-    m, b = np.polyfit(x,y,1)
-    tmp = []
-    for i in x:
-        tmp.append(m*i+b)
-    plt.plot(x, tmp)
-    plt.scatter(x, y)
-    plt.show()
+    if all(isinstance(a, np.ndarray) for a in [x,y,theta]):
+        # m, b = np.polyfit(x,y,1)
+        m, b = theta[1], theta[0]
+        tmp = []
+        for i in x:
+            tmp.append(m*i+b)
+        plt.plot(x, tmp)
+        plt.scatter(x, y)
+        plt.show()
