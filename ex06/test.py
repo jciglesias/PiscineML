@@ -31,3 +31,5 @@ print(loss_(y2, y_hat2))
 print(loss_(y2, y2))
 # Output:
 # 0.0
+
+print(loss_(y1, predict_(x1, np.polyfit([a[0] for a in x1], y1, 1))))
