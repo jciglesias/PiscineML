@@ -35,5 +35,7 @@ def loss_(y, y_hat):
     Raises:
     This function should not raise any Exception.
     """
-    dif = loss_elem_(y,y_hat)
-    return dif.sum() / (2 * len(y))
+    if all(isinstance(x, np.ndarray) for x in [y, y_hat]):
+        dif = loss_elem_(y,y_hat)
+        return dif.sum() / (2 * len(y))
+    return None
