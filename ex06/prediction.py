@@ -27,10 +27,12 @@ def predict_(x, theta):
 def parse(x, theta) -> bool:
     if isinstance(x, np.ndarray) and isinstance(theta, np.ndarray) and len(x) and len(theta) == 2:
         for j in theta:
-            if not isinstance(j[0], np.integer):
+            if not isinstance(j[0], (np.integer, float)):
+                print(type(j[0]))
                 return False
         for i in x:
-            if not isinstance(i, np.integer):
+            if not isinstance(i[0], (np.integer, float)):
+                print(type(i))
                 return False
         return True
     return False

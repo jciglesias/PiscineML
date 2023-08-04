@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 def loss_elem_(y, y_hat):
     """
@@ -14,7 +15,12 @@ def loss_elem_(y, y_hat):
     Raises:
     This function should not raise any Exception.
     """
-    pass
+    if all(isinstance(a, np.ndarray) for a in [y, y_hat]):
+        dif = []
+        for x in range(len(y_hat)):
+            dif.append([math.pow(y_hat[x] - y[x], 2)])
+        return np.array(dif)
+    return None
 def loss_(y, y_hat):
     """
     Description:
@@ -29,4 +35,5 @@ def loss_(y, y_hat):
     Raises:
     This function should not raise any Exception.
     """
-    pass
+    dif = loss_elem_(y,y_hat)
+    return dif.sum() / (2 * len(y))
