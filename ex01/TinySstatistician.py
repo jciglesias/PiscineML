@@ -52,11 +52,7 @@ class TinyStatistician:
             m = TinyStatistician.mean(x)
             for i in x:
                 v += (i - m) * (i - m)
-            if len(x) > 1:
-                v /= (len(x) - 1)
-            else:
-                v = None
-            return v
+            return v / len(x)
         return None
     def std(x: list):
         """computes the sample standard deviation of a given non-empty list or array
